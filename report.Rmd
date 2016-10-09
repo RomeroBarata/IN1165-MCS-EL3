@@ -1,0 +1,36 @@
+---
+title: "2016.2 Multiple Classifier Systems - Exercise List 3"
+author: "Romero Morais"
+date: "October 9, 2016"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Question 01
+For this question, the two DCS techniques implemented were the _OLA_ and the _LCA_, and the DES technique implemented was the _DS-KNN_. The diversity measure employed for the _DS-KNN_ was the _Double Fault Measure_.
+
+To generate the initial pool, the `Bagging` algorithm was used. The number of classifiers in the initial pool was set to 15. Also, the _DS-KNN_ algorithm selected for each test instance an ensemble of 3 classifiers. The 3 most diverse classifiers from the 5 most accurate ones, measured on the 5 nearest neighbours of the test instance.
+
+The three data sets utilised to assess the performance of the DCS and DES techniques were the [glass1](http://sci2s.ugr.es/keel/imbalanced.php), the [Haberman's Survival Data Set](https://archive.ics.uci.edu/ml/datasets/Haberman's+Survival), and the [Pima Indians Diabetes Data Set](http://archive.ics.uci.edu/ml/datasets/Pima+Indians+Diabetes).
+
+The experimentation consisted of a stratified five-fold cross-validation procedure repeated two times. At each round one fold was the test set, another one was the validation set, and the other three were the training set. The following table shows the mean accuracy ($\pm$ the standard deviation) of each combination of algorithm and data set:
+
+Data / Algorithm                         | Bagging             | OLA                 | LCA                 | DS-KNN
+-------------------| ------------------- | ------------------- | ------------------- | -------------------
+glass1 | $0.7366 \pm 0.0698$ | $\textbf{0.7535} \pm 0.0679$ | $0.6989 \pm 0.0988$ | $0.7227 \pm 0.0629$
+haberman | $0.7162 \pm 0.0537$ | $0.6839 \pm 0.0436$ | $0.7038 \pm 0.0444$ | $\textbf{0.7201} \pm 0.0258$
+pima | $0.7455 \pm 0.0458$ | $0.7247 \pm 0.0432$ | $\textbf{0.7461} \pm 0.0303$ | $0.7441 \pm 0.0301$
+
+As it can be seen, using a DS technique provived an advantage, at least once, over the raw bagging algorithm in each data set. Also, apart from the glass1/_OLA_ combination, employing a DS technique reduced the standard deviation of the results when compared to the raw bagging. Moreover, the _DS-KNN_ algorithm achieved the lowest standard deviation in every case.
+
+## Question 02
+No. Without splitting into training and validation sets, the DS algorithm will have to search for similar examples in the training set, which is a bad choice. Since many classifiers from the bagging pool are likely to correctly classify the points in the training set, the DS algorithm will have many "competent" classifiers to select from, and it will be difficult to select a really competent classifier.
+
+## Question 03
