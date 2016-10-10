@@ -74,4 +74,5 @@ for (i in seq_len(reps)){
     diversityMatrix(preds, testing_class, "correlation")
 }
 diversity_matrix <- diversity_matrix / reps
-dimnames(diversity_matrix) <- list(ds_rules, ds_rules)
+dimnames(diversity_matrix) <- list(c("bagging", ds_rules[-1]), 
+                                   c("bagging", ds_rules[-1]))

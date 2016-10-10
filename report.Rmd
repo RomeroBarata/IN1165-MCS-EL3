@@ -28,9 +28,23 @@ glass1 | $0.7366 \pm 0.0698$ | $\textbf{0.7535} \pm 0.0679$ | $0.6989 \pm 0.0988
 haberman | $0.7162 \pm 0.0537$ | $0.6839 \pm 0.0436$ | $0.7038 \pm 0.0444$ | $\textbf{0.7201} \pm 0.0258$
 pima | $0.7455 \pm 0.0458$ | $0.7247 \pm 0.0432$ | $\textbf{0.7461} \pm 0.0303$ | $0.7441 \pm 0.0301$
 
-As it can be seen, using a DS technique provived an advantage, at least once, over the raw bagging algorithm in each data set. Also, apart from the glass1/_OLA_ combination, employing a DS technique reduced the standard deviation of the results when compared to the raw bagging. Moreover, the _DS-KNN_ algorithm achieved the lowest standard deviation in every case.
+As it can be seen, using a DS technique provided an advantage, at least once, over the raw bagging algorithm in each data set. Also, apart from the glass1/_OLA_ combination, employing a DS technique reduced the standard deviation of the results when compared to the raw bagging. Moreover, the _DS-KNN_ algorithm achieved the lowest standard deviation in every case.
 
 ## Question 02
 No. Without splitting into training and validation sets, the DS algorithm will have to search for similar examples in the training set, which is a bad choice. Since many classifiers from the bagging pool are likely to correctly classify the points in the training set, the DS algorithm will have many "competent" classifiers to select from, and it will be difficult to select a really competent classifier.
 
 ## Question 03
+For this question, the _Correlation Measure_ was used as the diversity measure to compare the different DS algorithms.
+
+The experimentation consisted of randomly splitting the [Pima Indians Diabetes Data Set](http://archive.ics.uci.edu/ml/datasets/Pima+Indians+Diabetes) into training, validation, and testing sets, each containing 60%/20%/20% of the data, respectively. Then, trained the same algorithms from Question 01 and computed the pairwise correlation between their outputs for the testing set. The whole process was repeated 100 times and averaged. The following table shows the obtained results:
+
+Algorithm | Bagging  | OLA      | LCA      | DS-KNN
+--------- | -------- | -------- | -------- | --------
+Bagging   | $0.0000$ | $0.5486$ | $0.5746$ | $0.6426$
+OLA       | $0.5486$ | $0.0000$ | $0.4538$ | $0.5137$
+LCA       | $0.5746$ | $0.4538$ | $0.0000$ | $0.6241$
+DS-KNN    | $0.6426$ | $0.5137$ | $0.6241$ | $0.0000$
+
+These results and the results obtained in Question 01 enables us to say that there are differences between the DS algorithms. In Question 01, Bagging and LCA (for the Pima Indias Data Set) obtained similar accuracies, while on average their outputs are correlated 57% of the time. Surprisingly enough, despite the fact that OLA and LCA are similar algorithms, they achieved the lowest average correlation, of 45%, between their outputs.
+
+Unfortunately, I have got only this empirical experimentation to support my answers.
